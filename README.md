@@ -1,4 +1,5 @@
-# Hosting Your Website locally Using Docker
+# Hosting Your Website Using Docker
+
 **Description:**
 This project comprises of two separate tutorial for hosting a website locally using Docker. The first method is for a simple static website, and the 2nd method is for a Dynamic website comprising of a separate backend (Node.js) and frontend (React). It is containerized using Docker for easy deployment.
 
@@ -19,7 +20,7 @@ Create a directory to store your website files. For example:
 mkdir my_website
 ```
 
-Inside the my_website directory, create an index.html file with your webpage content or copy your website files here.
+Inside the my_website directory, create an index.html file with your webpage content.
 
 #### 2. Create a Dockerfile
 
@@ -30,30 +31,6 @@ touch Dockerfile
 ```
 
 - This creates the dockerfile in linux, which you can edit using your favorite text editor.
-
-```bash
-FROM httpd:latest
-```
-
-- This specifies the base image for the Docker image.
-
-```
-WORKDIR /usr/local/apache2/htdocs/
-```
-
-- This specifies the working directory for the Docker image.
-
-```bash
-COPY ./ /usr/local/apache2/htdocs/
-```
-
-- This copies the website files in the current directory to the Docker image.
-
-```
-EXPOSE 80
-```
-
-- This specifies the port for the Docker image.
 
 The completed Dockerfile looks like this:
 
@@ -66,6 +43,13 @@ COPY ./ /usr/local/apache2/htdocs/
 
 EXPOSE 80
 ```
+
+**Explanation:**
+
+- FROM httpd:latest: Sets the base Apache image.
+- WORKDIR: Defines the working directory inside the container.
+- COPY: Copies the content of the current directory to the container.
+- EXPOSE: Exposes port 80 for the website.
 
 #### 3. Build the Docker image
 
