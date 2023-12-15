@@ -19,7 +19,7 @@ Create a directory to store your website files. For example:
 mkdir my_website
 ```
 
-Inside the my_website directory, create an index.html file with your webpage content.
+Inside the my_website directory, create an index.html file with your webpage content or copy your website files here.
 
 #### 2. Create a Dockerfile
 
