@@ -1,4 +1,4 @@
-# Hosting Your Website Using Docker
+# Hosting Your Website locally Using Docker
 **Description:**
 This project comprises of two separate tutorial for hosting a website locally using Docker. The first method is for a simple static website, and the 2nd method is for a Dynamic website comprising of a separate backend (Node.js) and frontend (React). It is containerized using Docker for easy deployment.
 
