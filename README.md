@@ -108,10 +108,8 @@ The `my_website` directory contains the Dockerfile, and your website files.
 
 The `Dockerfile` file defines the configuration for the Docker image.
 
-The `index.html` file contains the content of your website.
 
 ### Notes
-- Replace index.html with your website content.
 - Customize ports or paths as needed.
 - This repository is for educational purposes only.
   
