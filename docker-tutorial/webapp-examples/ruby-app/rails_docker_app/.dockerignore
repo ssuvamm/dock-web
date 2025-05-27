@@ -1,0 +1,47 @@
+# Ignore OS-specific files
+.DS_Store
+ehthumbs.db
+Thumbs.db
+
+# Ignore git files
+.git
+.gitignore
+
+# Ignore development and test artifacts
+node_modules/
+tmp/
+log/
+coverage/
+spec/
+
+# Ignore local secrets and configuration that should not be in the image
+config/master.key
+config/credentials.yml.enc
+
+# Ignore build artifacts if assets are compiled outside the image
+public/assets
+public/packs
+public/packs-test
+
+# Docker specific files (should not be copied into the image itself)
+Dockerfile
+.dockerignore
+# docker-compose.yml # This file is one level up
+# entrypoint.sh # This is copied by Dockerfile, so it should be in context
+# README.md # This is one level up
+
+# Editor/IDE specific files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# SQLite databases if used locally (we use PostgreSQL in this example)
+*.sqlite3
+*.sqlite3-journal
+
+# Bundler files
+.bundle/
+
+# Bootsnap cache (if used)
+tmp/bootsnap-*/

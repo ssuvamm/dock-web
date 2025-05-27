@@ -1,0 +1,3 @@
+Flask==2.2.2
+# You can add other dependencies here, e.g., Gunicorn for production
+# gunicorn==20.1.0
