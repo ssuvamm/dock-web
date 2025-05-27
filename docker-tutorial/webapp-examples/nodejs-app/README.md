@@ -6,7 +6,8 @@ This example demonstrates how to containerize a simple Node.js web application b
 
 *   `server.js`: The main application file.
 *   `package.json`: Defines project dependencies and scripts.
-*   `Dockerfile`: Instructions to build the Docker image.
+*   `Dockerfile`: Instructions to build the Docker Image.
+
 *   `.dockerignore`: Specifies files to exclude from the Docker build context.
 
 ## How to Run
@@ -16,14 +17,16 @@ This example demonstrates how to containerize a simple Node.js web application b
     cd webapp-examples/nodejs-app
     ```
 
-2.  **Build the Docker image:**
-    Give your image a name, for example, `my-node-app`:
+2.  **Build the Docker Image:**
+    Give your Image a name, for example, `my-node-app`:
+
     ```bash
     docker build -t my-node-app .
     ```
 
-3.  **Run the Docker container:**
-    This command runs the container in detached mode and maps port 3000 on your host to port 8080 in the container (as defined in `server.js` and `Dockerfile`).
+3.  **Run the Docker Container:**
+    This command runs the Container in detached mode and maps port 3000 on your host to port 8080 in the Container (as defined in `server.js` and `Dockerfile`).
+
     ```bash
     docker run -d -p 3000:8080 --name node-app-container my-node-app
     ```
@@ -33,12 +36,14 @@ This example demonstrates how to containerize a simple Node.js web application b
 
 ## To Stop and Remove the Container
 
-1.  **Stop the container:**
+1.  **Stop the Container:**
+
     ```bash
     docker stop node-app-container
     ```
 
-2.  **Remove the container:**
+2.  **Remove the Container:**
+
     ```bash
     docker rm node-app-container
     ```

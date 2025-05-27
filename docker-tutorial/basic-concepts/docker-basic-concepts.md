@@ -4,10 +4,11 @@ Now that you have Docker installed, let's explore some of the fundamental concep
 
 ## Working with Docker Images
 
-Docker images are the blueprints for your containers. They are read-only templates that contain the application code, libraries, tools, dependencies, and other files needed to run an application.
+Docker Images are the blueprints for your Containers. They are read-only templates that contain the application code, libraries, tools, dependencies, and other files needed to run an application.
 
 *   **Pulling Images from Docker Hub:**
-    Docker Hub is a public registry of Docker images. You can pull images from Docker Hub using the `docker pull` command. For example, to pull the official Ubuntu image:
+    Docker Hub is a public registry of Docker Images. You can pull Images from Docker Hub using the `docker pull` command. For example, to pull the official Ubuntu Image:
+
     ```bash
     docker pull ubuntu
     ```
@@ -16,15 +17,17 @@ Docker images are the blueprints for your containers. They are read-only templat
     docker pull ubuntu:20.04
     ```
 *   **Listing Images:**
-    To see the images you have downloaded to your local system:
+    To see the Images you have downloaded to your local system:
+
     ```bash
     docker images
     # or
     docker image ls
     ```
-    This will show you the repository name, tag, image ID, creation date, and size.
+    This will show you the repository name, tag, Image ID, creation date, and size.
 *   **Removing Images:**
-    If you no longer need an image, you can remove it to free up disk space:
+    If you no longer need an Image, you can remove it to free up disk space:
+
     ```bash
     docker rmi <image_name_or_id>
     # or
@@ -34,99 +37,108 @@ Docker images are the blueprints for your containers. They are read-only templat
     ```bash
     docker rmi ubuntu:20.04
     ```
-    You might need to use the `-f` (force) flag if the image is being used by a container (even a stopped one) or if it has multiple tags.
+    You might need to use the `-f` (force) flag if the Image is being used by a Container (even a stopped one) or if it has multiple tags.
 
 ## Running Docker Containers
 
-A container is a runnable instance of an image. You create and run containers from images.
+A Container is a runnable instance of an Image. You create and run Containers from Images.
 
 *   **The `docker run` Command:**
-    This is the primary command for running containers. It creates a new container from a specified image and then starts it.
+    This is the primary command for running Containers. It creates a new Container from a specified Image and then starts it.
+
     A simple example:
     ```bash
     docker run ubuntu echo "Hello from inside a container!"
     ```
     This command:
-    1.  Checks if the `ubuntu` image is available locally. If not, it pulls it from Docker Hub.
-    2.  Creates a new container from the `ubuntu` image.
-    3.  Runs the command `echo "Hello from inside a container!"` inside that container.
-    4.  Stops and removes the container once the command finishes (because it's a non-interactive, short-lived command).
+    1.  Checks if the `ubuntu` Image is available locally. If not, it pulls it from Docker Hub.
+    2.  Creates a new Container from the `ubuntu` Image.
+    3.  Runs the command `echo "Hello from inside a container!"` inside that Container.
+    4.  Stops and removes the Container once the command finishes (because it's a non-interactive, short-lived command).
 
 *   **Interactive Mode (`-it`):**
-    To run a container and interact with its shell (e.g., a Bash shell in an Ubuntu container):
+    To run a Container and interact with its shell (e.g., a Bash shell in an Ubuntu Container):
+
     ```bash
     docker run -it ubuntu bash
     ```
     *   `-i` (interactive) keeps STDIN open even if not attached.
     *   `-t` (tty) allocates a pseudo-TTY.
-    Once inside the container's shell, you can run commands as if you were in a minimal Ubuntu environment. Type `exit` to leave the container's shell and stop the container.
+    Once inside the Container's shell, you can run commands as if you were in a minimal Ubuntu environment. Type `exit` to leave the Container's shell and stop the Container.
 
 *   **Detached Mode (`-d`):**
-    To run a container in the background (detached mode):
+    To run a Container in the background (detached mode):
     ```bash
     docker run -d -p 8080:80 nginx
     ```
-    This command runs an Nginx web server container in the background.
-    *   `-d` runs the container in detached mode.
-    *   `-p 8080:80` (port mapping): This maps port 8080 on your host machine to port 80 inside the container. So, you can access the Nginx server by navigating to `http://localhost:8080` in your web browser.
+    This command runs an Nginx web server Container in the background.
+    *   `-d` runs the Container in detached mode.
+    *   `-p 8080:80` (port mapping): This maps port 8080 on your host machine to port 80 inside the Container. So, you can access the Nginx server by navigating to `http://localhost:8080` in your web browser.
 
 *   **Naming Containers (`--name`):**
-    You can give your containers a custom name for easier reference:
+    You can give your Containers a custom name for easier reference:
+
     ```bash
     docker run -d -p 8080:80 --name my-web-server nginx
     ```
 
 *   **Volume Mounting (`-v`):**
-    Volumes are used to persist data generated by and used by Docker containers, or to share files between the host and the container.
-    Example: Mount a directory from your host into the container:
+    Volumes are used to persist data generated by and used by Docker Containers, or to share files between the host and the Container.
+    Example: Mount a directory from your host into the Container:
     ```bash
     # Syntax: -v /path/on/host:/path/in/container
+    # For Windows, the host path might look like: -v C:/Users/youruser/project:/app
     docker run -it -v /Users/youruser/project:/app ubuntu bash
     ```
-    Changes made in `/app` inside the container will reflect in `/Users/youruser/project` on your host, and vice-versa.
+    Changes made in `/app` inside the Container will reflect in `/Users/youruser/project` on your host, and vice-versa.
 
 ## Understanding Dockerfiles
 
-A Dockerfile is a text script that contains a series of instructions on how to build a Docker image. It automates the process of image creation.
+A Dockerfile is a text script that contains a series of instructions on how to build a Docker Image. It automates the process of Image creation.
 
 **Common Dockerfile Instructions:**
 
-*   **`FROM`:** Specifies the base image to start the build process from (e.g., `FROM ubuntu:22.04`, `FROM node:18`). Every Dockerfile must start with a `FROM` instruction.
-*   **`RUN`:** Executes commands in a new layer on top of the current image and commits the results. Often used for installing software packages (e.g., `RUN apt-get update && apt-get install -y python3`).
-*   **`COPY`:** Copies files or directories from your host machine (the context of the build) into the filesystem of the image (e.g., `COPY . /app` copies the current directory into `/app` in the image).
-*   **`ADD`:** Similar to `COPY`, but has some extra features like URL downloading and tarball extraction (though `COPY` is generally preferred for its explicitness).
-*   **`CMD`:** Provides defaults for an executing container. There can only be one `CMD` instruction in a Dockerfile. If you specify a command when running the container (`docker run image_name my_command`), it will override the `CMD`.
+*   **`FROM`:** Specifies the base Image to start the build process from (e.g., `FROM ubuntu:22.04`, `FROM node:18`). Every Dockerfile must start with a `FROM` instruction.
+*   **`RUN`:** Executes commands in a new layer on top of the current Image and commits the results. Often used for installing software packages (e.g., `RUN apt-get update && apt-get install -y python3`).
+*   **`COPY`:** Copies files or directories from your host machine (the context of the build) into the filesystem of the Image (e.g., `COPY . /app` copies the current directory into `/app` in the Image).
+*   **`ADD`:** Similar to `COPY`, but has some extra features like URL downloading and tarball extraction. `COPY` is generally preferred for its explicitness and predictability when just copying local files.
+*   **`CMD`:** Provides defaults for an executing Container. There can only be one `CMD` instruction in a Dockerfile. If you specify a command when running the Container (`docker run image_name my_command`), it will override the `CMD`.
     *   Example: `CMD ["python3", "app.py"]`
-*   **`ENTRYPOINT`:** Configures a container that will run as an executable. It's similar to `CMD`, but commands passed via `docker run` are appended as arguments to the `ENTRYPOINT`.
+*   **`ENTRYPOINT`:** Configures a Container that will run as an executable. It's similar to `CMD`, but commands passed via `docker run` are appended as arguments to the `ENTRYPOINT`.
     *   Example: `ENTRYPOINT ["python3"]` (then `docker run my-image app.py` would run `python3 app.py`)
 *   **`WORKDIR`:** Sets the working directory for any `RUN`, `CMD`, `ENTRYPOINT`, `COPY`, and `ADD` instructions that follow it in the Dockerfile.
     *   Example: `WORKDIR /app`
-*   **`EXPOSE`:** Informs Docker that the container listens on the specified network ports at runtime. This is purely informational for the user; you still need to use the `-p` flag with `docker run` to actually map the port.
+*   **`EXPOSE`:** Informs Docker that the Container listens on the specified network ports at runtime. This is purely informational for the user; you still need to use the `-p` flag with `docker run` to actually map the port.
+
     *   Example: `EXPOSE 80`
 *   **`ENV`:** Sets environment variables (e.g., `ENV APP_VERSION=1.0`).
 
 ## Building Docker Images (`docker build`)
 
-Once you have a Dockerfile, you can build an image from it using the `docker build` command.
+Once you have a Dockerfile, you can build an Image from it using the `docker build` command.
+
 
 1.  Navigate to the directory containing your Dockerfile.
 2.  Run the build command:
     ```bash
     docker build -t your-image-name:tag .
     ```
-    *   `-t your-image-name:tag`: Tags the image with a name and optionally a tag (e.g., `my-web-app:latest` or `my-web-app:1.0`).
+    *   `-t your-image-name:tag`: Tags the Image with a name and optionally a tag (e.g., `my-web-app:latest` or `my-web-app:1.0`).
+
     *   `.`: Specifies the build context (the current directory in this case). The build context is the set of files at the specified PATH or URL that Docker uses during the build process.
 
 ## Managing Containers
 
 *   **Listing Containers:**
-    *   To list running containers:
+    *   To list running Containers:
+
         ```bash
         docker ps
         # or
         docker container ls
         ```
-    *   To list all containers (running and stopped):
+    *   To list all Containers (running and stopped):
+
         ```bash
         docker ps -a
         # or
@@ -141,13 +153,14 @@ Once you have a Dockerfile, you can build an image from it using the `docker bui
     docker start <container_name_or_id>
     ```
 *   **Removing Containers:**
-    You can only remove stopped containers.
+    You can only remove stopped Containers.
     ```bash
     docker rm <container_name_or_id>
     ```
-    To remove a running container, you first need to stop it, or use the force flag (`docker rm -f <container_id>`).
+    To remove a running Container, you first need to stop it, or use the force flag (`docker rm -f <container_id>`).
 *   **Viewing Container Logs:**
-    To see the logs of a container (especially useful for detached containers):
+    To see the logs of a Container (especially useful for detached Containers):
+
     ```bash
     docker logs <container_name_or_id>
     ```
@@ -155,43 +168,50 @@ Once you have a Dockerfile, you can build an image from it using the `docker bui
 
 ## Introduction to Docker Compose
 
-While Dockerfiles are for building single container images, Docker Compose is a tool for defining and running multi-container Docker applications. With Compose, you use a YAML file (`docker-compose.yml`) to configure your application's services. Then, with a single command, you can create and start all the services from your configuration.
+While Dockerfiles are for building single Container Images, Docker Compose is a tool for defining and running multi-Container Docker applications. With Compose, you use a YAML file (`docker-compose.yml`) to configure your application's services. Then, with a single command, you can create and start all the services from your configuration.
+
 
 **Example `docker-compose.yml` structure:**
 
 ```yaml
-version: '3.8' # Specifies the version of the Compose file format
+# The version tag is optional in newer Compose versions but good for context.
+# It defines the schema version. '3.8' is a common modern version.
+version: '3.8'
 
 services:
   web: # Name of the first service (e.g., your web application)
-    build: . # Build an image from the Dockerfile in the current directory
+    build: . # Build an Image from the Dockerfile in the current directory
     ports:
-      - "5000:5000" # Map port 5000 on the host to port 5000 in the container
+      - "5000:5000" # Map port 5000 on the host to port 5000 in the Container
     volumes:
-      - .:/code # Mount current directory to /code in the container
+      - .:/code # Mount current directory to /code in the Container
+
     depends_on: # Optional: define dependencies between services
       - db
 
   db: # Name of the second service (e.g., a database)
-    image: postgres:14 # Use a pre-built image from Docker Hub
+    image: postgres:14 # Use a pre-built Image from Docker Hub
     environment:
       POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
+      POSTGRES_PASSWORD: password # For development only!
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - db_data:/var/lib/postgresql/data # Mount a named Volume for data persistence
 
-volumes: # Define named volumes for persistent data
+volumes: # Define named Volumes for persistent data
   db_data:
+    # driver: local (default)
+
 ```
 
 **Common Docker Compose Commands:**
 
-*   `docker-compose up`: Builds (if necessary), creates, starts, and attaches to containers for a service. Add `-d` to run in detached mode.
-*   `docker-compose down`: Stops and removes containers, networks, images, and volumes created by `up`.
-*   `docker-compose ps`: Lists containers.
+*   `docker-compose up`: Builds (if necessary), creates, starts, and attaches to Containers for a service. Add `-d` to run in detached mode.
+*   `docker-compose down`: Stops and removes Containers, Networks, Images (if built by Compose and not used by other projects), and Volumes (if specified with `-v`).
+*   `docker-compose ps`: Lists Containers managed by Compose.
 *   `docker-compose logs <service_name>`: Displays log output from services.
-*   `docker-compose build <service_name>`: Builds (or rebuilds) services.
-*   `docker-compose exec <service_name> <command>`: Execute a command in a running container.
+*   `docker-compose build <service_name>`: Builds (or rebuilds) a service's Image.
+*   `docker-compose exec <service_name> <command>`: Execute a command in a *running* Container.
+
 
 Docker Compose is incredibly useful for development environments and for orchestrating applications with multiple components (e.g., a web app, a database, a caching service).
 

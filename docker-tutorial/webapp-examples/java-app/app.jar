@@ -1,0 +1,4 @@
+This is a placeholder JAR file.
+Please build your Spring Boot application (e.g., using './mvnw clean package')
+and replace this file with the actual JAR from your 'target' directory,
+or ensure the Dockerfile's COPY instruction correctly points to your built JAR.

@@ -11,7 +11,8 @@ Docker Desktop is an easy-to-install application for your Mac or Windows environ
 Docker Desktop for Windows requires:
 
 *   **Windows 10 or 11 (64-bit):** Pro, Enterprise, or Education (Build 19042 or higher).
-*   **WSL 2 (Windows Subsystem for Linux 2):** Docker Desktop uses WSL 2 for better performance. The installer will offer to install or enable it if needed.
+*   **WSL 2 (Windows Subsystem for Linux 2):** Docker Desktop for Windows uses WSL 2 for its backend, providing better performance. The installer will typically offer to install or enable WSL 2 if it's not already configured.
+
 *   **Hardware prerequisites:**
     *   64-bit processor with Second Level Address Translation (SLAT).
     *   4GB system RAM.
@@ -63,7 +64,8 @@ For Linux, Docker Desktop is available for some distributions, but the more comm
 
 **General Steps for Installing Docker Engine on Linux (Example for Ubuntu):**
 
-These steps are a summary. For detailed instructions for your specific Linux distribution, always refer to the official Docker documentation: [https://docs.docker.com/engine/install/](https://docs.docker.com/engine/install/)
+These steps are a summary. For detailed instructions for your specific Linux distribution, always refer to the official Docker documentation: [https://docs.docker.com/engine/install/](https://docs.docker.com/engine/install/). Commands and package names can change, so the official documentation is the most up-to-date resource.
+
 
 1.  **Uninstall old versions (if any):**
     ```bash
@@ -125,9 +127,10 @@ docker run hello-world
 ```
 
 If Docker is installed correctly, this command will:
-1.  Download the `hello-world` image from Docker Hub (if it's not already on your system).
-2.  Run a container based on that image.
-3.  The container will print a message confirming your installation is working, and then exit.
+1.  Download the `hello-world` Image from Docker Hub (if it's not already on your system).
+2.  Run a Container based on that Image.
+3.  The Container will print a message confirming your installation is working, and then exit.
+
 
 Example output:
 ```
