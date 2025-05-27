@@ -1,0 +1,15 @@
+# Add your own tasks in files placed in lib/tasks.
+# For example, if you have lib/tasks/dev.rake, then you can require it:
+#
+# require File.expand_path('../lib/tasks/dev', __FILE__)
+
+require_relative "config/application"
+
+Rails.application.load_tasks
+
+# Optional: If you want to load tasks from engines or gems
+# (though for a minimal app, this might not be necessary)
+# Rake::RailsTask.new do |t|
+#   t.pattern = "**/*.rake"
+#   t.skip_tasks = %w( test:prepare ) # Example of skipping tasks
+# end
