@@ -1,0 +1,53 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:14-alpine # Using a specific, small version of Postgres
+    volumes:
+      # Persist PostgreSQL data to a named volume
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      # These environment variables are used by the PostgreSQL image
+      # to initialize the database.
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password # For development only! Use secrets for production.
+    # It's good practice not to expose the DB port to the host machine
+    # unless you need to connect to it directly for debugging.
+    # For container-to-container communication, Docker's internal network is used.
+    # ports:
+    #   - "5432:5432"
+
+  web:
+    # Build the image from the Dockerfile in the ./rails_docker_app directory
+    build: ./rails_docker_app
+    # The command to run when the container starts.
+    # This will be passed to the entrypoint.sh script.
+    # The entrypoint.sh script will run migrations then execute this command.
+    # command: bundle exec rails s -p 3000 -b '0.0.0.0' # This is now the CMD in Dockerfile
+
+    volumes:
+      # Mount the application code from the host into the container.
+      # This allows for live code reloading during development (Rails server might need a restart for some changes).
+      - ./rails_docker_app:/rails_docker_app
+      # Persist gems to a named volume to avoid reinstalling them every time,
+      # especially if they are not part of the image or if Gemfile changes often.
+      - gem_cache:/usr/local/bundle # Bundler path, check ruby -e 'puts Gem.path' inside container if unsure
+    ports:
+      # Map port 3000 on the host to port 3000 in the container (Rails default).
+      - "3000:3000"
+    depends_on:
+      # Ensure the 'db' service is started before the 'web' service.
+      - db
+    environment:
+      RAILS_ENV: development
+      DB_HOST: db # The hostname for the database service on Docker's network.
+      DB_USERNAME: postgres # Must match POSTGRES_USER in 'db' service.
+      DB_PASSWORD: password # Must match POSTGRES_PASSWORD in 'db' service.
+      DB_DATABASE: rails_docker_app_development # As defined in database.yml
+      RAILS_LOG_TO_STDOUT: "true" # Rails logs to STDOUT, making them visible with `docker-compose logs`.
+      # For faster startup in development, you might consider bootsnap.
+      # BOOTSNAP_CACHE_DIR: /usr/local/bundle/bootsnap_cache # Ensure this path is writable
+      # WEBPACKER_DEV_SERVER_HOST: webpacker # If using webpacker dev server
+
+volumes:
+  postgres_data: # Defines the named volume for PostgreSQL data.
+  gem_cache:     # Defines the named volume for storing gems.

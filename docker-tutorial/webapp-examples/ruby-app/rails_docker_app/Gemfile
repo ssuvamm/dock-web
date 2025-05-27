@@ -1,0 +1,17 @@
+source 'https://rubygems.org'
+git_source(:github) { |repo_name| "https://github.com/#{repo_name}.git" }
+
+ruby '3.1.0' # Specify a Ruby version similar to Dockerfile
+
+gem 'rails', '~> 7.0.0' # Or a specific version you intend to use
+gem 'pg', '~> 1.1'      # For PostgreSQL
+gem 'puma', '~> 5.0'    # Web server
+
+# Minimal set of gems for a basic Rails app
+gem 'sprockets-rails' # Asset pipeline
+gem 'importmap-rails' # For JavaScript management without Node
+gem 'turbo-rails'     # For Hotwire Turbo, often default now
+gem 'stimulus-rails'  # For Hotwire Stimulus
+
+# For time zones etc.
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]

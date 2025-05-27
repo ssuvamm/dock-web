@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+#
+# This file is a wrapper for the `bundle` command.
+# It is recommended to run `bundle binstubs bundler` to generate this file.
+#
+# If you have a Bundler binstub, it would typically load Bundler.
+# For simplicity in manual creation for this Docker example,
+# we'll rely on `bundle exec` in our commands, so this specific binstub
+# is less critical if `bundle install --binstubs` or `bundle binstubs`
+# was not run.
+#
+# However, to make it somewhat functional if called:
+ENV['BUNDLE_GEMFILE'] ||= File.expand_path('../Gemfile', __dir__)
+require 'bundler/setup' # Set up the load paths
+load Gem.bin_path('bundler', 'bundle')
