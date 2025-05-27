@@ -38,6 +38,7 @@ ruby-app/
     *   Create and start Containers for both the `web` (Rails) and `db` (PostgreSQL) services.
     *   The `entrypoint.sh` script in the `web` Container will attempt to create the database and run migrations.
 
+
     ```bash
     docker-compose up --build
     ```
@@ -46,6 +47,7 @@ ruby-app/
     docker-compose up --build -d
     ```
     The first time you run this, it might take a few minutes to download Images, install gems, and set up the database.
+
 
 3.  **Access the Application:**
     Once the services are running (you should see logs indicating the Rails server has started on port 3000), open your web browser and go to:
@@ -60,6 +62,7 @@ ruby-app/
     ```
     *(Note: This will remove the `postgres_data` named Volume by default if not declared as `external: true` in the `docker-compose.yml`. Anonymous volumes are always removed with `down`. For this example, using `down` gives a fresh start. If you want to keep data in named volumes, use `docker-compose stop` to just stop services.)*
 *   **Stop Services (keeps Containers and Volumes):**
+
     ```bash
     docker-compose stop
     ```
@@ -80,6 +83,7 @@ ruby-app/
         docker-compose exec web bundle exec rails c
         ```
     *   Open a bash session in the web Container:
+
         ```bash
         docker-compose exec web bash
         ```
@@ -92,5 +96,6 @@ ruby-app/
 
 *   **Database Persistence:** The `postgres_data` named Volume in `docker-compose.yml` ensures that your PostgreSQL database data persists across Container restarts (e.g., after `docker-compose stop` and `docker-compose start`). If you run `docker-compose down` without `-v`, named Volumes like `postgres_data` are kept. Using `docker-compose down -v` will remove named Volumes as well.
 *   **Gem Cache:** The `gem_cache` Volume helps persist downloaded gems, which can speed up subsequent `bundle install` runs if your `Gemfile.lock` hasn't changed significantly or if you rebuild the Image.
+
 *   **Development Focus:** This configuration is optimized for development (e.g., mounting application code as a volume for live changes). Production setups would require different configurations for performance, security, and asset handling.
 *   **`entrypoint.sh`:** This script ensures the database is ready before the Rails server starts. For more complex applications, you might use a tool like `wait-for-it.sh` to explicitly wait for the database service to be healthy.

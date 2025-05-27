@@ -6,6 +6,7 @@ Welcome to the world of Docker! This tutorial aims to guide you, as a beginner w
 
 Docker is an open-platform tool designed to make it easier to create, deploy, and run applications by using **Containers**. Containers allow a developer to package up an application with all of the parts it needs, such as libraries and other dependencies, and ship it all out as one package. Think of it like a standardized shipping container for software. Just like a physical shipping container can be loaded onto any ship or train, a Docker Container can run on any machine that has Docker installed, regardless of the underlying operating system or hardware.
 
+
 ## Why use Docker? (Benefits for Web Development)
 
 Docker offers several significant advantages for web developers:
@@ -16,6 +17,7 @@ Docker offers several significant advantages for web developers:
 *   **Rapid Deployment and Scalability:** Docker allows you to quickly deploy new versions of your application and easily scale it up or down based on demand.
 *   **Portability:** Docker Containers can run on any system that supports Docker – Windows, macOS, Linux, and cloud platforms.
 *   **Version Control for Infrastructure:** Dockerfiles, which are used to build Container Images, can be version-controlled just like your application code. This means you can track changes to your application's environment over time.
+
 *   **Microservices Architecture:** Docker is an excellent fit for building and deploying microservices, where an application is broken down into smaller, independent services.
 
 ## Docker vs. Virtual Machines (VMs)
@@ -36,6 +38,7 @@ It's common for beginners to confuse Docker containers with Virtual Machines (VM
 
 In essence, Containers are a more lightweight and efficient way to package and run applications compared to VMs, especially for web development.
 
+
 ## Basic Docker Terminology
 
 Here are a few fundamental Docker terms you'll encounter frequently:
@@ -45,5 +48,6 @@ Here are a few fundamental Docker terms you'll encounter frequently:
 *   **Dockerfile:** A Dockerfile is a text document that contains all the commands a user could call on the command line to assemble an Image. Docker uses this file to build new Images automatically. It's essentially the recipe for creating your Docker Image.
 *   **Docker Hub:** Docker Hub is a cloud-based registry service that allows you to link to code repositories, build your Images and test them, stores manually pushed Images, and links to Docker Cloud so you can deploy Images to your hosts. It serves as a vast library of official and community-contributed Images that you can use as a starting point for your applications.
 *   **Docker Engine:** The underlying client-server technology that builds and runs Containers. It consists of the Docker daemon (a long-running background process), a REST API that specifies interfaces for interacting with the daemon, and a command-line interface (CLI) client.
+
 
 This introduction should give you a basic understanding of what Docker is and why it's so popular. In the next sections, we'll dive into setting up Docker and learning how to use it.

@@ -8,6 +8,7 @@ Docker Images are the blueprints for your Containers. They are read-only templat
 
 *   **Pulling Images from Docker Hub:**
     Docker Hub is a public registry of Docker Images. You can pull Images from Docker Hub using the `docker pull` command. For example, to pull the official Ubuntu Image:
+
     ```bash
     docker pull ubuntu
     ```
@@ -17,6 +18,7 @@ Docker Images are the blueprints for your Containers. They are read-only templat
     ```
 *   **Listing Images:**
     To see the Images you have downloaded to your local system:
+
     ```bash
     docker images
     # or
@@ -25,6 +27,7 @@ Docker Images are the blueprints for your Containers. They are read-only templat
     This will show you the repository name, tag, Image ID, creation date, and size.
 *   **Removing Images:**
     If you no longer need an Image, you can remove it to free up disk space:
+
     ```bash
     docker rmi <image_name_or_id>
     # or
@@ -42,6 +45,7 @@ A Container is a runnable instance of an Image. You create and run Containers fr
 
 *   **The `docker run` Command:**
     This is the primary command for running Containers. It creates a new Container from a specified Image and then starts it.
+
     A simple example:
     ```bash
     docker run ubuntu echo "Hello from inside a container!"
@@ -54,6 +58,7 @@ A Container is a runnable instance of an Image. You create and run Containers fr
 
 *   **Interactive Mode (`-it`):**
     To run a Container and interact with its shell (e.g., a Bash shell in an Ubuntu Container):
+
     ```bash
     docker run -it ubuntu bash
     ```
@@ -72,6 +77,7 @@ A Container is a runnable instance of an Image. You create and run Containers fr
 
 *   **Naming Containers (`--name`):**
     You can give your Containers a custom name for easier reference:
+
     ```bash
     docker run -d -p 8080:80 --name my-web-server nginx
     ```
@@ -103,6 +109,7 @@ A Dockerfile is a text script that contains a series of instructions on how to b
 *   **`WORKDIR`:** Sets the working directory for any `RUN`, `CMD`, `ENTRYPOINT`, `COPY`, and `ADD` instructions that follow it in the Dockerfile.
     *   Example: `WORKDIR /app`
 *   **`EXPOSE`:** Informs Docker that the Container listens on the specified network ports at runtime. This is purely informational for the user; you still need to use the `-p` flag with `docker run` to actually map the port.
+
     *   Example: `EXPOSE 80`
 *   **`ENV`:** Sets environment variables (e.g., `ENV APP_VERSION=1.0`).
 
@@ -110,24 +117,28 @@ A Dockerfile is a text script that contains a series of instructions on how to b
 
 Once you have a Dockerfile, you can build an Image from it using the `docker build` command.
 
+
 1.  Navigate to the directory containing your Dockerfile.
 2.  Run the build command:
     ```bash
     docker build -t your-image-name:tag .
     ```
     *   `-t your-image-name:tag`: Tags the Image with a name and optionally a tag (e.g., `my-web-app:latest` or `my-web-app:1.0`).
+
     *   `.`: Specifies the build context (the current directory in this case). The build context is the set of files at the specified PATH or URL that Docker uses during the build process.
 
 ## Managing Containers
 
 *   **Listing Containers:**
     *   To list running Containers:
+
         ```bash
         docker ps
         # or
         docker container ls
         ```
     *   To list all Containers (running and stopped):
+
         ```bash
         docker ps -a
         # or
@@ -149,6 +160,7 @@ Once you have a Dockerfile, you can build an Image from it using the `docker bui
     To remove a running Container, you first need to stop it, or use the force flag (`docker rm -f <container_id>`).
 *   **Viewing Container Logs:**
     To see the logs of a Container (especially useful for detached Containers):
+
     ```bash
     docker logs <container_name_or_id>
     ```
@@ -157,6 +169,7 @@ Once you have a Dockerfile, you can build an Image from it using the `docker bui
 ## Introduction to Docker Compose
 
 While Dockerfiles are for building single Container Images, Docker Compose is a tool for defining and running multi-Container Docker applications. With Compose, you use a YAML file (`docker-compose.yml`) to configure your application's services. Then, with a single command, you can create and start all the services from your configuration.
+
 
 **Example `docker-compose.yml` structure:**
 
@@ -172,6 +185,7 @@ services:
       - "5000:5000" # Map port 5000 on the host to port 5000 in the Container
     volumes:
       - .:/code # Mount current directory to /code in the Container
+
     depends_on: # Optional: define dependencies between services
       - db
 
@@ -186,6 +200,7 @@ services:
 volumes: # Define named Volumes for persistent data
   db_data:
     # driver: local (default)
+
 ```
 
 **Common Docker Compose Commands:**
@@ -196,6 +211,7 @@ volumes: # Define named Volumes for persistent data
 *   `docker-compose logs <service_name>`: Displays log output from services.
 *   `docker-compose build <service_name>`: Builds (or rebuilds) a service's Image.
 *   `docker-compose exec <service_name> <command>`: Execute a command in a *running* Container.
+
 
 Docker Compose is incredibly useful for development environments and for orchestrating applications with multiple components (e.g., a web app, a database, a caching service).
 
